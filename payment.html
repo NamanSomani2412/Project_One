@@ -5,133 +5,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ebcfb0;
-            color: #222222;
-        }
-
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            font-size: 20px;
-            margin-top: 0;
-        }
-
-        .item {
-            position: relative;
-            margin: 25px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background-color: #bff3e8;
-            padding: 20px;
-            min-height: 350px;
-            max-width: 500px;
-        }
-
-        .item img {
-            width: 25%;
-            height: auto;
-            border-radius: 10px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 10px;
-        }
-
-        .price {
-            font-weight: bold;
-        }
-
-        p {
-            margin: 15px;
-            /* Remove default paragraph margin */
-        }
-
-        .item-details p {
-            display: block;
-            /* Display each paragraph on a new line */
-            margin-bottom: 10px;
-            /* Add margin between paragraphs for spacing */
-        }
-
-        .pay {
-            margin: auto;
-            width: 80%;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            background-color: #ffffff;
-            padding: 20px;
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            /* Center horizontally */
-        }
-
-        .pay-button {
-            background-color: #6d65e0;
-            border: none;
-            color: white;
-            padding: 15px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            margin: 4px 2px;
-            cursor: pointer;
-            border-radius: 8px;
-            transition-duration: 0.4s;
-        }
-
-        .pay-button:hover {
-            background-color: #371ec5;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-
-    <div class="container">
-        <h1>Payment Page</h1>
-        <div class="item">
-            <img id="itemImage" alt="itemName">
-            <h2>Item: <span id="itemName"></span></h2>
-            <p>Description: <span id="itemDescription"></span></p>
-            <p class="price">Price: <span id="itemPrice"></span></p>
-            <div class="pay">
-                <button class="pay-button" onclick="redirectToUPI()">Proceed to Pay</button>
-            </div>
-        </div>
+    <div class="payment-container">
+        <h1>Payment Details</h1>
+        <div id="product-info"></div>
+        <button id="confirm-payment">Confirm Payment</button>
     </div>
 
+    <script src="script.js"></script>
     <script>
-        document.getElementById('itemImage').src = localStorage.getItem('itemImage');
-        document.getElementById('itemName').innerText = localStorage.getItem('itemName');
-        document.getElementById('itemDescription').innerText = localStorage.getItem('itemDescription');
-        document.getElementById('itemPrice').innerText = localStorage.getItem('itemPrice');
+        // Function to display product information
+        function displayProductInfo() {
+            // Get the product ID from localStorage
+            var productId = localStorage.getItem('productId');
 
-        function redirectToUPI() {
-            var itemName = localStorage.getItem('itemName');
-            if (itemName === 'Red Chips') {
-                window.location.href = 'https://rzp.io/l/fsY4Oxz';
-            }
-            else {
-                window.location.href = 'success.html';
+            // Find the product with the given ID
+            var product = products.find(p => p.id == productId);
+
+            // Check if the product exists
+            if (product) {
+                var productInfoDiv = document.getElementById('product-info');
+
+                // Create elements to display product details
+                var img = document.createElement('img');
+                img.src = product.image;
+                img.alt = product.name;
+
+                var h2 = document.createElement('h2');
+                h2.textContent = product.name;
+
+                var description = document.createElement('p');
+                description.textContent = product.description;
+
+                var price = document.createElement('p');
+                price.className = 'price';
+                price.textContent = product.price;
+
+                // Append elements to the product info div
+                productInfoDiv.appendChild(img);
+                productInfoDiv.appendChild(h2);
+                productInfoDiv.appendChild(description);
+                productInfoDiv.appendChild(price);
+            } else {
+                document.getElementById('product-info').innerHTML = '<p>Product not found.</p>';
             }
         }
+
+        // Call the function to display product information
+        displayProductInfo();
+
+        document.getElementById('confirm-payment').onclick = function () {
+            var productId = localStorage.getItem('productId');
+            var product = products.find(p => p.id == productId);
+
+            // Check if the payment link is available
+            if (product.paymentLink === '0') {
+                alert('Item currently unavailable.');
+                localStorage.removeItem('productId'); // Clear the product ID from localStorage
+                window.location.href = 'index.html'; // Redirect to the index page
+            } else {
+                // Store product details in localStorage before redirecting
+                localStorage.setItem('itemImage', product.image);
+                localStorage.setItem('itemName', product.name);
+                localStorage.setItem('itemDescription', product.description);
+                localStorage.setItem('itemPrice', product.price);
+
+                // Redirect to the payment link
+                window.location.href = product.paymentLink;
+            }
+        };
     </script>
+
 </body>
 
 </html>

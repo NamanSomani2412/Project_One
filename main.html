@@ -5,172 +5,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vending Machine</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #ebcfb0;
-        }
-
-        .container {
-            padding: 20px;
-            text-align: center;
-        }
-
-        h1 {
-            color: #222222;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-
-        h2 {
-            color: #222222;
-            font-size: 20px;
-            margin-top: 0;
-        }
-
-        .item {
-            position: relative;
-            display: flex;
-            margin: 25px auto;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            cursor: pointer;
-            max-width: 500px;
-            max-height: 150px;
-        }
-
-        .item img {
-            width: 20%;
-            object-fit: cover;
-            border-radius: 10px 0 0 10px;
-        }
-
-        .item-details {
-            padding: 10px;
-            width: 60%;
-        }
-
-        h2,
-        p {
-            margin: 0;
-        }
-
-        .price {
-            font-weight: bold;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-        }
-
-        .item:nth-child(1) {
-            background-color: #e3818d;
-        }
-
-        .item:nth-child(2) {
-            background-color: #8fcff5;
-        }
-
-        .item:nth-child(3) {
-            background-color: #fffc91;
-        }
-
-        .item:nth-child(4) {
-            background-color: #c2d97f;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
 
-    <div class="container">
+    <div class="head">
         <h1>Vending Machine</h1>
         <h2>Select an Item</h2>
-
-        <!-- JavaScript will populate this section -->
-        <div id="items"></div>
-
     </div>
+    <!-- JavaScript will populate this section -->
+    <div class="Products" id="items"></div>
 
-    <script>
-        // Define an array of products
-        var products = [
-            {
-                name: 'Red Chips',
-                description: 'Description of Red Chips goes here.',
-                price: 'MRP: Rs5.00',
-                image: 'item1.jpg'
-            },
-            {
-                name: 'Blue Chips',
-                description: 'Description of Blue Chips goes here.',
-                price: 'MRP: Rs5.00',
-                image: 'item2.jpg'
-            },
-            {
-                name: 'Yellow Chips',
-                description: 'Description of Yellow Chips goes here.',
-                price: 'MRP: Rs5.00',
-                image: 'item3.jpg'
-            },
-            {
-                name: 'Green Chips',
-                description: 'Description of Green Chips goes here.',
-                price: 'MRP: Rs5.00',
-                image: 'item4.jpg'
-            }
-        ];
 
-        // Function to create and append items
-        function createItems() {
-            var itemsContainer = document.getElementById('items');
-            products.forEach(function (product) {
-                var itemDiv = document.createElement('div');
-                itemDiv.className = 'item';
-                itemDiv.onclick = function () {
-                    redirectToPayment(product.name, product.description, product.price, product.image);
-                };
 
-                var img = document.createElement('img');
-                img.src = product.image;
-                img.alt = product.name;
-                itemDiv.appendChild(img);
-
-                var detailsDiv = document.createElement('div');
-                detailsDiv.className = 'item-details';
-                var h2 = document.createElement('h2');
-                h2.textContent = product.name;
-                var p1 = document.createElement('p');
-                p1.textContent = product.description;
-                var p2 = document.createElement('p');
-                p2.className = 'price';
-                p2.textContent = product.price;
-
-                detailsDiv.appendChild(h2);
-                detailsDiv.appendChild(p1);
-                detailsDiv.appendChild(p2);
-
-                itemDiv.appendChild(detailsDiv);
-                itemsContainer.appendChild(itemDiv);
-            });
-        }
-
-        // Call the function to create items
-        createItems();
-
-        function redirectToPayment(name, description, price, imageSrc) {
-            // Set data in localStorage
-            localStorage.setItem('itemName', name);
-            localStorage.setItem('itemDescription', description);
-            localStorage.setItem('itemPrice', price);
-            localStorage.setItem('itemImage', imageSrc);
-
-            // Redirect to payment page
-            window.location.href = 'payment.html';
-        }
-    </script>
+    <script src="script.js"></script>
 
 </body>
 

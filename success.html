@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Successfull</title>
+    <title>Payment Successful</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -37,7 +37,8 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background-color: #bff3e8;
             padding: 20px;
-            min-height: 425px;
+            min-height: 450px;
+            /* Increased min-height for more space */
             max-width: 500px;
         }
 
@@ -55,14 +56,6 @@
 
         p {
             margin: 15px;
-            /* Remove default paragraph margin */
-        }
-
-        .item-details p {
-            display: block;
-            /* Display each paragraph on a new line */
-            margin-bottom: 10px;
-            /* Add margin between paragraphs for spacing */
         }
 
         .close {
@@ -73,14 +66,13 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background-color: #ffffff;
             padding: 20px;
-            position: absolute;
+            position: relative;
+            /* Change to relative for better positioning */
             bottom: 10px;
-            left: 0;
-            right: 0;
-            /* Center horizontally */
+            /* Adjusted spacing */
         }
 
-        .close-button {
+        .exit-button {
             background-color: #e06565;
             border: none;
             color: white;
@@ -89,13 +81,14 @@
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 4px 2px;
+            margin: 20px 0;
+            /* Added margin for space above and below the button */
             cursor: pointer;
             border-radius: 8px;
             transition-duration: 0.4s;
         }
 
-        .close-button:hover {
+        .exit-button:hover {
             background-color: #c51e1e;
         }
     </style>
@@ -110,26 +103,26 @@
             <p>Description: <span id="itemDescription"></span></p>
             <p class="price">Price: <span id="itemPrice"></span></p>
 
-            <h1> Thanks For Purchasing </h1>
-            <h2> Order will be dispached shortly at our Machine </h2>
+            <h1>Thanks For Purchasing</h1>
+            <h2>Your order will be dispatched shortly at our machine</h2>
 
             <div class="close">
-                <button class="close-button" onclick="ClosePage()">CLOSE</button>
+                <button class="exit-button" onclick="exitPage()">EXIT</button>
             </div>
         </div>
     </div>
 
     <script>
+        // Retrieve and display product details from localStorage
         document.getElementById('itemImage').src = localStorage.getItem('itemImage');
         document.getElementById('itemName').innerText = localStorage.getItem('itemName');
         document.getElementById('itemDescription').innerText = localStorage.getItem('itemDescription');
         document.getElementById('itemPrice').innerText = localStorage.getItem('itemPrice');
 
-        function ClosePage() {
-            window.open('', '_self', ''); // Open an empty page in the same tab
-            window.close(); // Close the current tab
+        // Function to redirect to the index page
+        function exitPage() {
+            window.location.href = 'index.html'; // Redirect to index.html
         }
-
     </script>
 </body>
 
